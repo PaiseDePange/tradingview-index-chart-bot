@@ -1,53 +1,41 @@
 import streamlit as st
 
-st.set_page_config(page_title="TradingView Index Charts", layout="centered")
+st.set_page_config(page_title="TradingView NSE Sectoral Chart Viewer", layout="centered")
 
-st.title("📈 TradingView Index Chart Viewer")
-st.write("Select an index or sector to view its live chart from TradingView.")
+st.title("📈 NSE Sectoral Indices Chart Viewer")
+st.write("Select an NSE sectoral index to view its live TradingView chart.")
 
-# Extended index list with NSE Sectoral Indices
 index_options = {
     "Nifty 50": "NSE:NIFTY",
     "Nifty Next 50": "NSE:NIFTYJUNIOR",
     "Nifty 100": "NSE:CNX100",
-    "Nifty 200": "NSE:NIFTY200",
-    "Nifty 500": "NSE:NIFTY500",
     "Nifty Midcap 50": "NSE:CNXMIDCAP",
-    "Nifty Midcap 100": "NSE:NIFTYMIDCAP100",
-    "Nifty Smallcap 100": "NSE:NIFTYSMALLCAP100",
-    "Nifty Bank": "NSE:BANKNIFTY",
-    "Nifty Auto": "NSE:NIFTYAUTO",
-    "Nifty Financial Services": "NSE:NIFTYFINANCE",
-    "Nifty FMCG": "NSE:NIFTYFMCG",
+    "Nifty Midcap 100": "NSE:CNXMIDPCAP100",
+    "Nifty Smallcap 100": "NSE:CNXSMALLCAP",
+    "Nifty Bank": "NSE:CNXBANK",
+    "Nifty Auto": "NSE:CNXAUTO",
+    "Nifty Financial Services": "NSE:CNXFINANCIAL",
+    "Nifty FMCG": "NSE:CNXFMCG",
     "Nifty IT": "NSE:CNXIT",
-    "Nifty Media": "NSE:NIFTYMEDIA",
-    "Nifty Metal": "NSE:NIFTYMETAL",
-    "Nifty Pharma": "NSE:NIFTYPHARMA",
-    "Nifty PSU Bank": "NSE:NIFTYPSUBANK",
-    "Nifty Private Bank": "NSE:NIFTYPRIVATEBANK",
-    "Nifty Realty": "NSE:NIFTYREALTY",
-    "Nifty Energy": "NSE:NIFTYENERGY",
-    "Nifty Oil & Gas": "NSE:NIFTYOILGAS",
-    "Nifty Healthcare Index": "NSE:NIFTYHEALTHCARE",
-    "Nifty Consumer Durables": "NSE:NIFTYCONSUMERDURABLES",
-    "Nifty Commodities": "NSE:NIFTYCOMMODITIES",
-    "Nifty Infrastructure": "NSE:NIFTYINFRA",
-    "Nifty Services Sector": "NSE:NIFTYSERVSECTOR"
+    "Nifty Media": "NSE:CNXMEDIA",
+    "Nifty Metal": "NSE:CNXMETAL",
+    "Nifty Pharma": "NSE:CNXPHARMA",
+    "Nifty PSU Bank": "NSE:CNXPSUBANK",
+    "Nifty Private Bank": "NSE:CNXPRIVBANK",
+    "Nifty Realty": "NSE:CNXREALTY",
+    "Nifty Energy": "NSE:CNXENERGY",
+    "Nifty Oil & Gas": "NSE:CNXOILGAS",
+    "Nifty Healthcare": "NSE:CNXHEALTH",
+    "Nifty Consumer Durables": "NSE:CNXCONSDEUR",
+    "Nifty Services Sector": "NSE:CNXSERVICE"
 }
 
-selected_index = st.selectbox("Choose an Index or Sector", list(index_options.keys()))
-ticker = index_options[selected_index]
+selected = st.selectbox("Choose index:", list(index_options.keys()))
+sym = index_options[selected]
 
-# Embed TradingView chart via iframe
-tradingview_url = f"""
+iframe = f"""
 <iframe 
-    src="https://s.tradingview.com/widgetembed/?frameElementId=tradingview_{ticker}&symbol={ticker}&interval=D&hidesidetoolbar=1&symboledit=1&saveimage=1&toolbarbg=f1f3f6&studies=[]&theme=light&style=1&timezone=Etc/UTC&withdateranges=1&hideideas=1&hidelegend=1" 
-    width="100%" 
-    height="500" 
-    frameborder="0" 
-    allowtransparency="true" 
-    scrolling="no">
-</iframe>
+    src="https://s.tradingview.com/widgetembed/?symbol={sym}&interval=D&...&theme=light"
+    width="100%" height="500" frameborder="0" scrolling="no"></iframe>
 """
-
-st.components.v1.html(tradingview_url, height=500)
+st.components.v1.html(iframe, height=500)
